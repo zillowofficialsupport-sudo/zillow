@@ -1,0 +1,1 @@
+- [Dependency firewall compatibility](dependency-firewall.md) — update blocked legacy transitive packages narrowly instead of bypassing security policy or migrating the app.
