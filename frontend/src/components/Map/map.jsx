@@ -45,7 +45,7 @@ const Map = ({ listingId }) => {
 		const address = "514 E 82nd St New York, NY 10028";
 
 		dispatch(getLatLngByAddress(address));
-	}, []);
+	}, [dispatch]);
 
 	const handleMouseOver = (listingId) => {
 		setHoveredMarkerId(listingId);

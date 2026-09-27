@@ -24,7 +24,7 @@ export const useDropdown = (
 
   useEffect(() => {
     setDropDownWidth(containerWidth);
-  }, [dropDown]);
+  }, [containerWidth, dropDown]);
 
   useEffect(() => {
     minValueRef.current = minValue;
@@ -76,7 +76,7 @@ export const useDropdown = (
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [dropDown]);
+  }, [dispatch, dropDown, onClose, stateMaxPrice, stateMinPrice]);
 
   // Close dropdown if in PriceRange user sets Max Price for listing
   useEffect(() => {

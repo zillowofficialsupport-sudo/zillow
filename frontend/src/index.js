@@ -9,8 +9,6 @@ import { ChakraBaseProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 
 import { getLocalStorageSearchCredentials } from "./store/utils";
-import { SkeletonTheme } from "react-loading-skeleton";
-
 const domNode = document.getElementById("root");
 const root = createRoot(domNode);
 

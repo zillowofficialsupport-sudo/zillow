@@ -41,7 +41,7 @@ const SplashSearchInput = ({
     return () => {
       document.body.removeEventListener("click", handleClickOutside);
     };
-  }, [searchBarClicked]);
+  }, [dispatch, searchBarClicked]);
 
   function handleInputClick(e) {
     e.preventDefault();

@@ -31,7 +31,7 @@ const Listings = () => {
     return () => {
       dispatch(clearAllListings());
     };
-  }, [filter]);
+  }, [dispatch, filter]);
 
   const listingStyling = {
     flexBasis: "calc(50% - 8px)",

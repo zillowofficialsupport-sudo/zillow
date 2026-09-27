@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, useRef, useId } from "react";
+import { createContext, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import SuggestionItem from "./SuggestionItem";
@@ -58,7 +58,7 @@ const IndexSearch = ({
 		return () => {
 			document.removeEventListener("click", handleOutsideClick);
 		};
-	}, [focusSearch, searchRef]);
+  }, [focusSearch, searchRef, setFocusSearch]);
 
 	function handleSuggestionItemClick(e) {
 		e.preventDefault();

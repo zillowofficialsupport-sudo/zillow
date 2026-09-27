@@ -21,7 +21,7 @@ const Squares = ({ squareType, squareNumber, setNumber }) => {
       setSelectedSquare(squareElement);
       squareElement.classList.add("selected-square");
     }
-  }, []);
+  }, [selectedSquare, squareNumber, squareType]);
 
   function handleClick(e) {
     e.preventDefault();

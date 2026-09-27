@@ -10,8 +10,6 @@ import {
 } from "@chakra-ui/react";
 import LoginForm from "../Authentication/LoginForm";
 import NewAccountForm from "../Authentication/NewAccountForm";
-import ModalWelcomeHeader from "../Header/Welcome";
-
 const ModalTabs = ({ closeModal }) => {
 	return (
 		<ChakraProvider theme={tabListTheme}>

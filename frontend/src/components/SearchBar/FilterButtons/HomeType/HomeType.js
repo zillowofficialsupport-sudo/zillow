@@ -34,7 +34,7 @@ const HomeType = () => {
 
   const deselectAll = useMemo(() => {
     return excludeHomeType?.length === 0 ? "Deselect All" : "Select All";
-  }, [excludeHomeType]);
+  }, [dispatch, excludeHomeType, excludes]);
 
   // Set localStorage and Update state with home types that will be
   // excluded from the search(db query)
@@ -58,7 +58,7 @@ const HomeType = () => {
       }
       dispatch(setExcludes(excludes || []));
     },
-    [deselectAll]
+    [deselectAll, dispatch]
   );
 
   const handleCheckMarkClick = useCallback((e) => {

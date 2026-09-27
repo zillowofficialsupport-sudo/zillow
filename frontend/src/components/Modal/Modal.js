@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import FocusTrap from "focus-trap-react";
-import ModalCloseButton from "./ModalCloseButton";
-
 import "./Modal.scss";
 
 export const Modal = (props) => {

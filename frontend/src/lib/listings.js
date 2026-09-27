@@ -225,7 +225,7 @@ export async function updateSupabaseListing(listingId, payload) {
     .single();
 
   if (error) throw error;
-  const photos = await uploadListingPhotos(listingId, payload.photos);
+  await uploadListingPhotos(listingId, payload.photos);
   // Re-fetch so edits without new uploads retain the existing gallery and
   // edits with uploads return the complete listing shape to Redux.
   return getSupabaseListingById(data.id);
