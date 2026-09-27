@@ -11,11 +11,9 @@ const LoginForm = ({ closeModal }) => {
 
   const activeUser = useSelector(getActiveUser());
 
-  // automatically close modal if user is logged in by
-  // either clicking the demo user button or the sign in button
-  if (activeUser) {
-    closeModal();
-  }
+  useEffect(() => {
+    if (activeUser) closeModal();
+  }, [activeUser, closeModal]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -35,14 +33,6 @@ const LoginForm = ({ closeModal }) => {
         setErrors([res.statusText]);
       }
     });
-  };
-
-  // Sign in as a demo user
-  const demoUserHandleOnClick = (e) => {
-    e.preventDefault();
-    dispatch(loginUser({ email: "mlkz@gmail.com", password: "Password123!" }));
-
-    closeModal();
   };
 
   return (
@@ -76,9 +66,6 @@ const LoginForm = ({ closeModal }) => {
         <div className="button_group">
           <Button className="sign-in-btn" type="submit">
             Sign in
-          </Button>
-          <Button className="demo-user-btn" onClick={demoUserHandleOnClick}>
-            Demo User
           </Button>
           <FollowButtonLinks />
         </div>

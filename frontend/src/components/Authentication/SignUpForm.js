@@ -22,15 +22,21 @@ const SignUpForm = ({ closeModal, onClickOutside }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(createUser(email, password));
-    closeModal();
+    dispatch(createUser({ email, password }))
+      .then(() => closeModal())
+      .catch(() => {});
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
         Email
-        <input type="text" value={email} onChange={handleOnChange("email")} />
+        <input
+          type="email"
+          value={email}
+          onChange={handleOnChange("email")}
+          required
+        />
       </label>
       <label>
         Password
@@ -38,8 +44,10 @@ const SignUpForm = ({ closeModal, onClickOutside }) => {
           type="password"
           value={password}
           onChange={handleOnChange("password")}
+          required
         />
       </label>
+      <button type="submit">Create account</button>
     </form>
   );
 };

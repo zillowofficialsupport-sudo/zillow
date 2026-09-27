@@ -16,7 +16,7 @@ export const removeUser = () => ({
 });
 
 export const getActiveUser = () => (state) => {
-  if (state && state.session.user) {
+  if (state?.session?.user) {
     return state.session.user;
   }
 

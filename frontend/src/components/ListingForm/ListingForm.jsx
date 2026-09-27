@@ -21,7 +21,7 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 	const { listingId } = useParams();
 	const formType = listingId ? "Update post" : "Post for sale by owner";
 
-	let listing = useSelector(getListing(listingId));
+	const storedListing = useSelector(getListing(listingId));
 
 	useEffect(() => {
 		if (listingId) {
@@ -36,13 +36,12 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 		setPhotoFiles(Array.from(currentTarget.files || []));
 	};
 
-	if (!listing) {
-		listing = {
+	const listing = storedListing || {
 			price: "",
-			address: resultAddress.streetAddress,
-			city: resultAddress.city,
-			state: resultAddress.state,
-			zipcode: resultAddress.zipcode,
+			address: resultAddress?.streetAddress || "",
+			city: resultAddress?.city || "",
+			state: resultAddress?.state || "",
+			zipcode: resultAddress?.zipcode || "",
 			bedroom: "",
 			bathroom: "",
 			sqft: "",
@@ -58,13 +57,12 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 			ac: false,
 			heating: false,
 		};
-	}
 
 	const [price, setPrice] = useState(listing ? listing.price : 0);
-	const [address] = useState(listing.address);
-	const [city] = useState(listing.city);
-	const [state] = useState(listing.state);
-	const [zipcode] = useState(listing.zipcode);
+	const [address, setAddress] = useState(listing.address);
+	const [city, setCity] = useState(listing.city);
+	const [state, setState] = useState(listing.state);
+	const [zipcode, setZipcode] = useState(listing.zipcode);
 	const [bedroom, setBedrooms] = useState(listing.bedroom);
 	const [bathroom, setBathrooms] = useState(listing.bathroom);
 	const [sqft, setSqft] = useState(listing.sqft);
@@ -77,32 +75,54 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 	const [isHeating, setHeating] = useState(listing.heating);
 	const [agreement, setAgreement] = useState(false);
 
-	// TODO: Figure out the way to list renting or selling
-	// const [listingType, setListingType] = useState("Sale");
+	useEffect(() => {
+		if (!storedListing) return;
 
-	// TODO: Implement photos
-	// const [photoUrl, setPhotoUrl] = useState('');
-
-	// TODO: Set up errors
-	// const [errors, setErrors] = useState([]);
+		setPrice(storedListing.price ?? "");
+		setAddress(storedListing.address ?? "");
+		setCity(storedListing.city ?? "");
+		setState(storedListing.state ?? "");
+		setZipcode(storedListing.zipcode ?? "");
+		setBedrooms(storedListing.bedroom ?? "");
+		setBathrooms(storedListing.bathroom ?? "");
+		setSqft(storedListing.sqft ?? "");
+		setBuildingType(storedListing.buildingType || storedListing.building_type || "Apartment");
+		setYearBuilt(storedListing.builtIn ?? storedListing.built_in ?? "");
+		setKeyWords(storedListing.keyWords ?? storedListing.key_words ?? "");
+		setDescription(storedListing.overview ?? "");
+		setGarage(Boolean(storedListing.garage));
+		setAc(Boolean(storedListing.ac));
+		setHeating(Boolean(storedListing.heating));
+	}, [storedListing]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setSubmitError("");
 
-		const estPayment = (price / (30 * 12)).toFixed(2);
-		const priceSqft = (price / sqft).toFixed(2);
+		const numericPrice = Number(price);
+		const numericSqft = Number(sqft);
+		if (!Number.isFinite(numericPrice) || numericPrice <= 0) {
+			setSubmitError("Enter a valid price.");
+			return;
+		}
+		if (!Number.isFinite(numericSqft) || numericSqft <= 0) {
+			setSubmitError("Enter finished square feet greater than zero.");
+			return;
+		}
+
+		const estPayment = (numericPrice / (30 * 12)).toFixed(2);
+		const priceSqft = (numericPrice / numericSqft).toFixed(2);
 		const listingPayload = {
 			lat: coordinates?.lat ?? listing.lat,
 			lng: coordinates?.lng ?? listing.lng,
-			price: Number(price),
+			price: numericPrice,
 			address,
 			city,
 			state,
 			zipcode: String(zipcode || ""),
 			bedroom: Number(bedroom),
 			bathroom: Number(bathroom),
-			sqft: Number(sqft),
+			sqft: numericSqft,
 			listing_type: listing.listing_type || "Sale",
 			est_payment: estPayment,
 			building_type: buildingType,
@@ -137,7 +157,7 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 					{submitError && <p role="alert">{submitError}</p>}
 					<br />
 					<h1>For Sale By Owner Listing</h1>
-					<h2 className="address-title">{`${resultAddress.streetAddress}, ${resultAddress.city}, ${resultAddress.state}, ${resultAddress.zipcode}`}</h2>
+					<h2 className="address-title">{`${address}, ${city}, ${state}, ${zipcode}`}</h2>
 					<p className="warning">
 						Post once and your home will be listed on both Villow
 						and Trulia, reaching buyers on the largest real estate
@@ -386,7 +406,6 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 					</label>
 					<button
 						type="submit"
-						onSubmit={handleSubmit}
 						disabled={!agreement}
 						className="bttn post-submit"
 					>

@@ -1,7 +1,8 @@
 import React from "react";
 import App from "./App";
 import configureStore from "./store";
-import { restoreSession } from "./store/authSession";
+import { subscribeToAuthState } from "./store/authSession";
+import { fetchCurrentUser } from "./store/usersReducer";
 import { Provider } from "react-redux";
 import { createRoot } from "react-dom/client";
 import { ChakraBaseProvider } from "@chakra-ui/react";
@@ -23,6 +24,12 @@ let initialState = {
 
 const store = configureStore(initialState);
 
+store.dispatch(fetchCurrentUser()).catch((error) => {
+  // Keep the app usable when a stale or expired Supabase session is present.
+  console.error("Unable to restore Supabase session", error);
+});
+subscribeToAuthState(store.dispatch);
+
 root.render(
   <React.StrictMode>
     <ChakraBaseProvider>
@@ -37,4 +44,3 @@ root.render(
   </React.StrictMode>
 );
 
-restoreSession();

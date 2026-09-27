@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     deleteListing,
-    fetchListings,
+	fetchListingByUserId,
     getListings
 } from "../../store/listingsReducer";
 import ProfileCard from "./ProfileCard";
@@ -19,9 +19,9 @@ const YourHome = ({ currentUser }) => {
 
 	useEffect(() => {
 		if (currentUser) {
-			dispatch(fetchListings(currentUser.id));
+			dispatch(fetchListingByUserId(currentUser.id));
 		}
-	}, []);
+	}, [currentUser, dispatch]);
 
 
 	const handleCheck = (event, listingId) => {

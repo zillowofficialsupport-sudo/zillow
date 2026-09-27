@@ -27,14 +27,9 @@ const NewAccountForm = () => {
 
     return dispatch(
       createUser({ email: email, password: password.password })
-    ).catch(async (res) => {
-      const errors = res.message.split(",");
-
-      if (res?.message) {
-        setErrors(errors);
-      } else {
-        setErrors([res.statusText]);
-      }
+    ).catch((res) => {
+      const message = res?.message || res?.statusText || "Could not create your account.";
+      setErrors(message.split(","));
     });
   };
 

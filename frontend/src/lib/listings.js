@@ -226,7 +226,9 @@ export async function updateSupabaseListing(listingId, payload) {
 
   if (error) throw error;
   const photos = await uploadListingPhotos(listingId, payload.photos);
-  return normalizeListing({ ...data, listing_photos: photos });
+  // Re-fetch so edits without new uploads retain the existing gallery and
+  // edits with uploads return the complete listing shape to Redux.
+  return getSupabaseListingById(data.id);
 }
 
 export async function getSupabaseFavorites(userId) {
@@ -241,6 +243,7 @@ export async function getSupabaseFavorites(userId) {
 }
 
 export async function deleteSupabaseListings(listingIds) {
+  if (!listingIds.length) return;
   const client = requireSupabase();
   const { error } = await client.from("listings").delete().in("id", listingIds);
   if (error) throw error;

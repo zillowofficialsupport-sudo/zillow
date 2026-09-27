@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ListingForm from "../ListingForm/ListingForm";
 import ConfirmationMap from "./ConfirmationMap";
-import Geocode from "react-geocode";
 import "./ConfirmLocation.scss";
 
 const ConfirmLocation = ({ address, coordinates }) => {
@@ -25,25 +24,9 @@ const ConfirmLocation = ({ address, coordinates }) => {
 		setChangeLocation(false);
 	};
 
-	const getCoordinatesFromCoordinates = async () => {
-		const MAPS_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-		Geocode.setApiKey(MAPS_API_KEY);
-		const response = await Geocode.fromLatLng(selectedPosition.lat, selectedPosition.lng);
-
-		if (response.status === "OK") {
-			const generatedAddress = response.results[0].formatted_address;
-			setResultAddress(generatedAddress);
-		}
-
-		return null;
-}
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		getCoordinatesFromCoordinates();
 		setNextPage(true);
-
 	};
 
 	return nextPage ? (
