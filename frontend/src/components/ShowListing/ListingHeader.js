@@ -50,7 +50,7 @@ const ListingHeader = ({ listing }) => {
 		<header className="listing_header">
 			<button className="back-to-listing" type="button" onClick={() => closeModal()}>
 				<BackArrow /> <span>Back to search</span>
-			</div>
+			</button>
 			<div
 				className="grid-item middle"
 				style={{ width: "125px", height: "45px" }}
