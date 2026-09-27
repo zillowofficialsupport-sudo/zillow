@@ -12,7 +12,7 @@ const ConfirmLocation = ({ address, coordinates }) => {
 	const [selectedPosition, setSelectedPosition] = useState(coordinates);
 	const [changeLocation, setChangeLocation] = useState(false);
 	const [nextPage, setNextPage] = useState(false);
-	const [resultAddress, setResultAddress] = useState(address);
+	const [resultAddress] = useState(address);
 
 	const handleLocationChange = (e) => {
 		e.preventDefault();
