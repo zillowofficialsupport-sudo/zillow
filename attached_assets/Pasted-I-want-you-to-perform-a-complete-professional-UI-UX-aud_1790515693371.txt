@@ -1,0 +1,561 @@
+I want you to perform a complete professional UI/UX audit and upgrade of my existing real-estate website.
+
+IMPORTANT: This is an existing website that I built myself. Do NOT rebuild it from scratch unless a specific component genuinely needs to be replaced. Preserve all existing functionality, backend connections, database logic, routes, APIs, authentication, property data, and working features unless a change is necessary to fix or improve something.
+
+PRIMARY OBJECTIVE
+
+I want this website to have the same level of polish, usability, visual hierarchy, responsiveness, and overall real-estate marketplace experience as Zillow.
+
+Use the current Zillow website as a DESIGN AND UX REFERENCE for analysis only. Do not copy Zillow’s proprietary source code, copyrighted images, logos, trademarks, proprietary text, or other protected assets.
+
+The goal is to achieve a highly polished, professional real-estate marketplace experience through ORIGINAL implementation.
+
+Do not give me a generic redesign.
+
+I want you to inspect my actual website, identify weaknesses, compare them against the current Zillow experience, and then improve my existing implementation.
+
+⸻
+
+PHASE 1 — COMPLETE EXISTING-WEBSITE SCAN
+
+Before changing anything, thoroughly inspect the entire project.
+
+Scan:
+
+* Every page
+* Every route
+* Every component
+* HTML
+* CSS
+* JavaScript/TypeScript
+* React components, if applicable
+* Images
+* Icons
+* Fonts
+* Responsive layouts
+* Navigation
+* Search
+* Filters
+* Property cards
+* Property detail pages
+* Image galleries
+* Maps
+* Buttons
+* Forms
+* Modals
+* Dropdowns
+* Menus
+* Loading states
+* Empty states
+* Error states
+* Mobile layouts
+* Tablet layouts
+* Desktop layouts
+* Backend/API connections
+* Supabase integration
+* Property data rendering
+* Database-driven components
+
+Determine which parts are already good and which parts need improvement.
+
+DO NOT unnecessarily replace working functionality.
+
+⸻
+
+PHASE 2 — INVENTORY THE CURRENT WEBSITE
+
+Create an internal inventory of the website before modifying it.
+
+Identify:
+
+1. Homepage
+2. Search experience
+3. Search results
+4. Map/listing experience
+5. Property cards
+6. Property detail page
+7. Property photo gallery
+8. Property information sections
+9. Pricing/rent presentation
+10. Bedroom/bathroom information
+11. Property features
+12. Amenities
+13. Location information
+14. Navigation/header
+15. Footer
+16. Filters
+17. Sort controls
+18. Saved/favorite functionality
+19. Application/contact functionality
+20. Forms
+21. Mobile navigation
+22. Responsive behavior
+23. Loading states
+24. Error handling
+25. Empty results
+26. Any other major user-facing functionality
+
+Do not assume something doesn’t exist. Verify the codebase.
+
+⸻
+
+PHASE 3 — ANALYZE ZILLOW AS A REFERENCE
+
+Now inspect the current Zillow website and study its publicly visible user experience.
+
+Analyze the major design patterns, including:
+
+* Overall page structure
+* Header organization
+* Navigation hierarchy
+* Search experience
+* Search bar proportions
+* Search/filter placement
+* Listing-card structure
+* Information hierarchy
+* Typography hierarchy
+* Font sizing
+* Font weights
+* Line heights
+* Spacing
+* Padding
+* Margins
+* Border radius
+* Shadows
+* Borders
+* Button proportions
+* Icon placement
+* Image aspect ratios
+* Gallery behavior
+* Property-detail layout
+* Desktop behavior
+* Tablet behavior
+* Mobile behavior
+* Sticky elements
+* Scrolling behavior
+* Map/list interactions
+* Filtering behavior
+* Sorting behavior
+* Loading states
+* Empty states
+* Micro-interactions
+* Hover states
+* Active states
+* Focus states
+* Visual hierarchy
+* Accessibility patterns
+
+Do not copy Zillow’s proprietary implementation.
+
+Instead, identify the underlying UX principles and design patterns that make the experience feel polished and intuitive.
+
+⸻
+
+PHASE 4 — SIDE-BY-SIDE GAP ANALYSIS
+
+Compare my website against the Zillow reference.
+
+For every major page and component, identify:
+
+* What my website currently does
+* What Zillow’s experience does differently
+* Why the difference matters from a UX perspective
+* What should be improved
+* How it should be improved
+* Which existing files/components need modification
+
+Pay particular attention to differences that make my website look unfinished, inconsistent, amateur, or less professional.
+
+Prioritize:
+
+1. Major layout problems
+2. Typography problems
+3. Spacing inconsistencies
+4. Poor visual hierarchy
+5. Inconsistent components
+6. Weak property cards
+7. Weak property-detail pages
+8. Poor image presentation
+9. Poor responsive behavior
+10. Search/filter UX
+11. Navigation
+12. Buttons and controls
+13. Loading/empty/error states
+14. Accessibility
+15. Performance
+
+⸻
+
+PHASE 5 — PROPERTY DETAIL PAGE
+
+Pay special attention to the property detail page.
+
+I want a highly polished real-estate property page.
+
+Review and improve:
+
+* Property title
+* Address
+* Price/rent
+* Beds
+* Baths
+* Square footage
+* Property type
+* Photo gallery
+* Main image
+* Thumbnail behavior
+* Full-screen gallery
+* Image navigation
+* Favorite/save controls
+* Share controls
+* Property description
+* Amenities
+* Features
+* Location
+* Map
+* Nearby information
+* Application/contact actions
+* Sticky elements
+* Mobile layout
+* Desktop layout
+* Loading states
+* Missing-data states
+
+Most importantly, make sure that when a property is added through my backend/Supabase, the frontend automatically renders that property consistently using the same professional property-detail structure.
+
+Do not hardcode individual properties.
+
+The UI must be driven by the database data.
+
+⸻
+
+PHASE 6 — PROPERTY CARDS
+
+Audit every property card.
+
+Make the cards consistent across the entire application.
+
+Check:
+
+* Image dimensions
+* Image cropping
+* Aspect ratio
+* Price placement
+* Bed/bath information
+* Address
+* Property type
+* Favorite button
+* Badges
+* Spacing
+* Typography
+* Hover behavior
+* Mobile behavior
+* Loading behavior
+* Missing-image behavior
+
+Create a consistent reusable property-card component if one does not already exist.
+
+Do not create separate inconsistent versions of the same card.
+
+⸻
+
+PHASE 7 — DESIGN SYSTEM
+
+Create or improve a consistent design system for the website.
+
+Establish reusable values for:
+
+* Typography
+* Font sizes
+* Font weights
+* Line heights
+* Colors
+* Background colors
+* Border colors
+* Border radius
+* Shadows
+* Spacing
+* Buttons
+* Inputs
+* Cards
+* Badges
+* Icons
+* Containers
+* Breakpoints
+
+Avoid random CSS values throughout the project.
+
+If the project already has a design system, improve it instead of unnecessarily replacing it.
+
+⸻
+
+PHASE 8 — ICONS AND VISUAL DETAILS
+
+Audit all icons throughout the website.
+
+Make sure:
+
+* Icons are visually consistent
+* Stroke weights are consistent
+* Sizes are consistent
+* Alignment is correct
+* Icons have appropriate spacing
+* Buttons don’t look oversized or undersized
+* Icons work correctly on mobile and desktop
+* SVGs render correctly
+* Missing icons are replaced with appropriate original/licensed alternatives
+
+Do not use Zillow’s proprietary icon files or assets.
+
+The goal is to reproduce the same level of visual consistency and professionalism, not to copy proprietary assets.
+
+⸻
+
+PHASE 9 — RESPONSIVE DESIGN
+
+Test the entire website at:
+
+* Mobile
+* Small mobile
+* Tablet
+* Laptop
+* Desktop
+* Large desktop
+
+Look for:
+
+* Overflow
+* Broken grids
+* Incorrect image sizes
+* Text wrapping problems
+* Buttons becoming too large
+* Navigation problems
+* Poor spacing
+* Cards becoming unusable
+* Gallery problems
+* Map problems
+* Sticky-element problems
+
+Fix responsive issues rather than simply hiding problematic components.
+
+⸻
+
+PHASE 10 — FUNCTIONALITY AUDIT
+
+Do not focus only on appearance.
+
+Verify that the important interactions actually work.
+
+Test:
+
+* Search
+* Filters
+* Sorting
+* Property navigation
+* Property detail pages
+* Gallery
+* Favorite/save
+* Share
+* Forms
+* Buttons
+* Links
+* Back navigation
+* Browser refresh
+* Direct property URLs
+* Mobile navigation
+* Database rendering
+* Supabase queries
+* Loading states
+* Empty results
+* Error states
+
+Do not break existing functionality while improving the UI.
+
+⸻
+
+PHASE 11 — DATABASE-DRIVEN RENDERING
+
+This is extremely important.
+
+The frontend must remain completely compatible with my existing backend.
+
+When I add a new property through Supabase, it should automatically appear using the same:
+
+* Property card
+* Search result layout
+* Gallery
+* Property-detail template
+* Pricing display
+* Bed/bath display
+* Amenities
+* Description
+* Location
+* Other available property information
+
+Do not hardcode data just to make the demo look good.
+
+Do not create fake frontend-only property records unless they are explicitly required for testing.
+
+⸻
+
+PHASE 12 — BRANDING
+
+There may be incorrect placeholder branding, spelling, or old project names throughout the application.
+
+Perform a global audit of:
+
+* Site name
+* Logo text
+* Metadata
+* Page titles
+* Favicon
+* Navigation
+* Footer
+* Buttons
+* Empty states
+* Error messages
+* SEO metadata
+* Open Graph metadata
+* Browser title
+
+Correct obvious inconsistencies.
+
+Use my existing brand identity rather than introducing unrelated branding.
+
+⸻
+
+PHASE 13 — ACTUALLY IMPLEMENT THE IMPROVEMENTS
+
+After completing the analysis, do not stop at a report.
+
+Actually modify the codebase.
+
+Implement the highest-priority improvements.
+
+Do this systematically:
+
+1. Fix global design-system issues.
+2. Fix navigation/header.
+3. Fix homepage.
+4. Fix search.
+5. Fix filters.
+6. Fix property cards.
+7. Fix search results.
+8. Fix property-detail pages.
+9. Fix gallery.
+10. Fix responsive layouts.
+11. Fix icons and visual consistency.
+12. Fix loading/empty/error states.
+13. Verify Supabase rendering.
+14. Verify existing functionality.
+
+Do not rewrite the entire application unnecessarily.
+
+Make focused, maintainable improvements.
+
+⸻
+
+PHASE 14 — VISUAL QUALITY CONTROL
+
+After making changes, perform another complete visual audit.
+
+Look for:
+
+* Misaligned elements
+* Inconsistent spacing
+* Inconsistent typography
+* Wrong font sizes
+* Broken icons
+* Incorrect image cropping
+* Poor mobile layouts
+* Uneven cards
+* Broken buttons
+* Excessive whitespace
+* Crowded sections
+* Inconsistent border radii
+* Inconsistent shadows
+* Poor contrast
+* Visual hierarchy problems
+
+Fix every obvious issue you find.
+
+⸻
+
+PHASE 15 — FINAL VERIFICATION
+
+Before declaring the work finished, verify:
+
+* Application builds successfully
+* No console errors
+* No broken routes
+* No broken imports
+* No missing assets
+* No broken images
+* No broken database queries
+* Supabase data renders correctly
+* New properties render correctly
+* Existing properties still work
+* Search works
+* Filters work
+* Property pages work
+* Gallery works
+* Mobile layout works
+* Desktop layout works
+* Browser refresh works
+* Direct property URLs work
+
+Do not claim something is working unless you actually test it.
+
+⸻
+
+IMPORTANT RULES
+
+1. Preserve existing functionality.
+2. Do not rebuild unnecessarily.
+3. Do not hardcode database data.
+4. Do not replace Supabase with another backend.
+5. Do not remove existing features without a reason.
+6. Do not introduce unnecessary dependencies.
+7. Keep the code clean and maintainable.
+8. Reuse components wherever possible.
+9. Make the website responsive.
+10. Make the UI feel like a professional, modern real-estate marketplace.
+11. Use Zillow only as a reference for UX/design analysis.
+12. Do not copy proprietary Zillow code, images, logos, text, or other protected assets.
+13. Use original or properly licensed assets.
+14. Do not deliberately create deceptive branding or impersonation.
+15. Prioritize actual functionality over visual tricks.
+
+FINAL OUTPUT
+
+When finished, provide me with:
+
+1. Audit Summary
+
+What you found.
+
+2. Major Weaknesses
+
+The biggest problems in the original implementation.
+
+3. Changes Made
+
+Exactly what you changed.
+
+4. Files Modified
+
+List every file you changed.
+
+5. Remaining Issues
+
+Anything that still needs attention.
+
+6. Testing Results
+
+Tell me what you actually tested and whether it passed.
+
+7. Next Improvements
+
+Give me the highest-value improvements that could be done next.
+
+Most importantly: DO THE WORK. Do not simply tell me how I could do it. Inspect the project, compare it against the reference experience, modify the existing code, test it, and leave the application in a substantially more polished and professional state.
