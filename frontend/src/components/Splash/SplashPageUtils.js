@@ -2,8 +2,8 @@ export function DownArrow() {
 	return (
 		<svg
 			viewBox="0 0 32 32"
-			dataTestid="arrow-down"
-			ariaHidden="true"
+			data-testid="arrow-down"
+			aria-hidden="true"
 			focusable="false"
 			role="img"
       width={16}

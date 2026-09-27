@@ -1,6 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, A11y } from "swiper";
+import { Navigation, A11y } from "swiper/modules";
 import { CarouselNextButton, CarouselPrevButton } from "./CarouselButton";
 
 import ListingItem from "../ListingItem/ListingItem";
@@ -57,11 +57,11 @@ const Carousel = ({
                   </SwiperSlide>
                 );
               })
-            : [1, 2, 3, 4, 5].map((_, idx) => (
-                <SwiperSlide key={idx.id}>
-                  <ListingItemSkeleton key={idx} />
-                </SwiperSlide>
-              ))}
+             : [1, 2, 3, 4, 5].map((_, idx) => (
+                 <SwiperSlide key={`skeleton-${idx}`}>
+                   <ListingItemSkeleton />
+                 </SwiperSlide>
+               ))}
         </Swiper>
       </div>
     </div>
