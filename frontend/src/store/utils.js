@@ -69,7 +69,6 @@ export const cleanLocalStorageSearchCredentials = () => {
     bedroom,
     bathroom,
     excludes,
-    searchHistory,
   } = getLocalStorageSearchCredentials();
 
   const parsedSearchWord =
@@ -77,9 +76,7 @@ export const cleanLocalStorageSearchCredentials = () => {
 
   const encodedSearchValue = encodeURIComponent(parsedSearchWord);
 
-  // TODO: use camel key to snake key in rails and delete this function
-  let queryObject = {
-    expected_response: "listings", // Flag for back-end. Rails may rqueryStringeceive suggestions flag
+  const queryObject = {
     [term]: encodedSearchValue,
     term,
     ...(listingType && { listing_type: listingType }),
@@ -88,7 +85,6 @@ export const cleanLocalStorageSearchCredentials = () => {
     ...(bedroom && { bedroom }),
     ...(bathroom && { bathroom }),
     ...(excludes && excludes.length !== 0 && { excludes }),
-    searchHistory, // TODO: I think I don't need this key in the query string
   };
 
   delete queryObject["undefined"];

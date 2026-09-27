@@ -1,0 +1,13 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/imagekit-auth",
+      "mountPath": "/api",
+      "method": "GET",
+      "module": [
+        "api/imagekit-auth.js:onRequestGet"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}

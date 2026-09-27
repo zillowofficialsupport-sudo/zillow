@@ -1,7 +1,7 @@
 import React from "react";
 import App from "./App";
 import configureStore from "./store";
-import { restoreSession } from "./store/csrf";
+import { restoreSession } from "./store/authSession";
 import { Provider } from "react-redux";
 import { createRoot } from "react-dom/client";
 import { ChakraBaseProvider } from "@chakra-ui/react";

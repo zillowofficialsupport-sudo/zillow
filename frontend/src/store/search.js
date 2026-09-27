@@ -1,9 +1,5 @@
-import { csrfFetch } from "./csrf";
-import {
-	cleanLocalStorageSearchCredentials,
-	objectToQuerySting,
-} from "./utils";
 import { createSelector } from "reselect";
+import { getSupabaseSuggestions } from "../lib/search";
 
 const RECEIVE_SUGGESTIONS = "api/search/RECEIVE_SUGGESTIONS";
 const CLEAN_SUGGESTIONS = "CLEAN_SUGGESTIONS";
@@ -28,36 +24,10 @@ const cleanSuggestions = () => ({
 });
 
 export const searchSuggestions =
-	(searchString, term = null, location) =>
+	(searchString, term = null) =>
 	async (dispatch) => {
-		let res;
-
-		const baseParams = {
-			expected_response: "suggestions",
-			term: term,
-			[term]: searchString,
-		};
-
-		const localStorageParams = cleanLocalStorageSearchCredentials();
-
-		const queryString = objectToQuerySting({
-			...(location !== "splash" && { localStorageParams }), // if location is from splash page
-			...baseParams, // don't send parameters from local Storage
-		});
-
-		if (term) {
-			res = await csrfFetch(`/api/search?${queryString}`);
-		} else {
-			// TODO(mlkz): I think I have to get rid of it. this case never hits
-			res = await csrfFetch(
-				`/api/listings?search_string${searchString}?search_term=${term}`
-			);
-		}
-
-		if (res.ok) {
-			const suggestions = await res.json();
-			dispatch(receiveSuggestions(suggestions));
-		}
+		const suggestions = await getSupabaseSuggestions(searchString, term);
+		dispatch(receiveSuggestions(suggestions));
 	};
 
 export const cleanSearchSuggestions = () => async (dispatch) => {

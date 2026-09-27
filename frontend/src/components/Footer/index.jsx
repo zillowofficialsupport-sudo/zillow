@@ -37,12 +37,6 @@ const Footer = () => {
 			<div className="footer">
 				<ul className="language-links">
 					<li>
-						<a href="https://ruby-doc.org/">ruby</a>
-					</li>
-					<li>
-						<a href="https://rubyonrails.org/">ruby on rails</a>
-					</li>
-					<li>
 						<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
 							JavaScript
 						</a>
