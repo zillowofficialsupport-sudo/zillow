@@ -34,13 +34,8 @@ const Listings = () => {
   }, [filter]);
 
   const listingStyling = {
-    flexBasis: "49%",
-    maxWidth: "49%",
-    height: "281px",
-  };
-
-  const thumbnailStyling = {
-    height: "171px",
+    flexBasis: "calc(50% - 8px)",
+    maxWidth: "calc(50% - 8px)",
   };
 
   const handleClick = (e) => {
@@ -52,33 +47,35 @@ const Listings = () => {
     <>
       <div className="index-container">
         <div className="listing-container-header">
-          <h1>Real Estate & Homes For Sale</h1>
-          <FontAwesomeIcon
-            className="arrow-icon"
-            icon={faArrowUp}
+          <div>
+            <p className="listing-container-header__eyebrow">Explore listings</p>
+            <h1>Homes for sale</h1>
+          </div>
+          <button
+            className={`sort-button ${reversed ? "is-reversed" : ""}`}
+            type="button"
             onClick={handleClick}
-          />
+            aria-label={`Sort listings ${reversed ? "oldest first" : "newest first"}`}
+          >
+            <span>{reversed ? "Oldest" : "Newest"}</span>
+            <FontAwesomeIcon icon={faArrowUp} />
+          </button>
         </div>
         <div className="listings-container">
-          {reversed
-            ? listings
-                .reverse()
-                .map((listing, i) => (
+          {listings.length === 0 ? (
+            <div className="listings-empty-state">
+              <h2>No homes found</h2>
+              <p>Try a different location or adjust your filters.</p>
+            </div>
+          ) : (
+            (reversed ? [...listings].reverse() : listings).map((listing) => (
                   <ListingItem
-                    key={i}
+                    key={listing.id}
                     listing={listing}
                     listingStyling={listingStyling}
-                    thumbnailStyling={thumbnailStyling}
                   />
                 ))
-            : listings.map((listing, i) => (
-                <ListingItem
-                  key={i}
-                  listing={listing}
-                  listingStyling={listingStyling}
-                  thumbnailStyling={thumbnailStyling}
-                />
-              ))}
+          )}
         </div>
       </div>
     </>

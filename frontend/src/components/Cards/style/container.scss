@@ -3,10 +3,13 @@
 .cards-container {
     @include flexCenter;
     background-color: rgb(249 249 251);
-    height: 664px;
+    min-height: 664px;
+    height: auto;
     width: 100%;
     padding: 64px 0px;
     gap: 25px;
+    flex-wrap: wrap;
+    padding: 64px 24px;
 
 }
 

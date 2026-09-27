@@ -17,11 +17,6 @@ const Carousel = ({
   header,
   paragraph,
 }) => {
-  const listingStyling = {
-    minWidth: "286px",
-    height: "283px",
-  };
-
   return (
     <div className="carousel-container">
       <div className="header-container">
@@ -52,7 +47,6 @@ const Carousel = ({
                   <SwiperSlide key={listing.id}>
                     <ListingItem
                       listing={listing}
-                      listingStyling={listingStyling}
                     />
                   </SwiperSlide>
                 );

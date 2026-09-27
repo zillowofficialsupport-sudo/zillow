@@ -53,7 +53,7 @@ const SplashSearchInput = ({
 
   return (
     <div>
-      <div className="search-input-dropdown-wrapper">
+      <form className="search-input-dropdown-wrapper" onSubmit={handleSearchSubmit}>
         <div className="splash-search-container" onClick={handleInputClick}>
           <input
             className="search_container__search_bar"
@@ -62,15 +62,17 @@ const SplashSearchInput = ({
             placeholder="Enter address, neighborhood, city, or ZIP code"
             onChange={handleSearchOnChange}
             onClick={(e) => setSuggestionsBox(true)}
+            aria-label="Search homes"
           />
-          <div
+          <button
+            type="submit"
             className="search_container__search_button"
-            onClick={handleSearchSubmit}
+            aria-label="Search"
           >
             <SearchIcon />
-          </div>
+          </button>
         </div>
-      </div>
+      </form>
 
       <div className="splash-suggestions-dropdown">
         {searchBarClicked && suggestions?.length === 0 ? (

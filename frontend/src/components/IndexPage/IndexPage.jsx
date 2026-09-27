@@ -14,7 +14,9 @@ const IndexPage = () => {
     <div className="index-page-container">
       <SearchBar />
       <div className="index-page-content-container">
-        <Map />
+        <div className="map-panel">
+          <Map />
+        </div>
         <Listings />
       </div>
     </div>

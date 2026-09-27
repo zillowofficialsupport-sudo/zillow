@@ -1,96 +1,187 @@
 .container {
-    z-index: 0;
+    position: relative;
+    z-index: 2;
+    background: #fff;
 }
 
 #navigation {
-    height: 5vh;
-    min-height: 80px;
-    width: 100%;
+    min-height: 76px;
+    width: min(100% - 48px, 1320px);
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
-    gap: 10%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
 }
 
-
 .grid-item {
-
     a {
+        color: #263449;
+        transition: color 160ms ease;
+
         &:hover {
-            color: rgb(44 104 244);
+            color: var(--villow-blue);
         }
     }
 }
 
 .left {
-    padding: 0px 24px 0px 45px;
-    font-weight: 400;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    font-size: 16px;
-    gap: 28px;
-
+    justify-content: flex-start;
 }
 
-
-
 .right {
-    padding: 0px 24px 0px 45px;
-    font-weight: 400;
+    justify-content: flex-end;
+}
+
+.nav-links {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-    font-size: 16px;
-    gap: 28px;
+    gap: 26px;
+    min-width: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.brand-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+}
+
+.brand-logo {
+    display: block;
+    width: 132px;
+    height: auto;
 }
 
 .search_container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url("https://wp-tid.zillowstatic.com/bedrock/app/uploads/sites/5/2022/08/ZG_ZPA_08_21_Americana_ExtFront_1081_1440_desktopWebp-2.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 60% bottom;
-    height: 408px;
+    justify-content: center;
+    min-height: 424px;
     width: 100%;
-    border-top: 2px solid #ebebeb;
-    gap: 8%;
+    overflow: hidden;
+    padding: 54px 24px 64px;
+    gap: 30px;
+    color: #fff;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(91, 172, 224, 0.78), transparent 34%),
+      radial-gradient(circle at 88% 12%, rgba(245, 185, 107, 0.55), transparent 28%),
+      linear-gradient(120deg, #123c61 0%, #1c6d91 46%, #23546e 100%);
 }
 
-.search_container:nth-child(1) {}
+.search_container::before,
+.search_container::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    pointer-events: none;
+}
 
-.grid-item:nth-child(2) {}
+.search_container::before {
+    width: 460px;
+    height: 460px;
+    left: -180px;
+    bottom: -260px;
+}
 
+.search_container::after {
+    width: 520px;
+    height: 520px;
+    right: -180px;
+    top: -300px;
+}
 
+.hero-copy {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    text-align: center;
+}
 
-.search_container>h1 {
+.hero-copy .eyebrow {
+    margin: 0 0 12px;
+    color: #c9edff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.hero-copy h1 {
     display: flex;
     justify-content: center;
-    margin-top: 70px;
+    margin: 0;
     width: 100%;
     color: #fff;
     font-weight: 700;
-    line-height: 36px;
-    max-width: 550px;
-    text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    -webkit-tap-highlight-color: transparent;
-    filter: drop-shadow(0px 0px 5px #000);
-    font-family: 'Times New Roman', sans-serif;
-    font-size: 38px;
+    line-height: 1.08;
+    font-size: clamp(34px, 5vw, 58px);
+    letter-spacing: -0.04em;
+}
+
+.hero-copy > p:last-child {
+    max-width: 570px;
+    margin: 18px auto 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 16px;
 }
 
 .search_container__search_bar {
-    height: 70px;
-    padding: 22px 0px 24px 22px;
-    background-color: #F6F6FA;
-    width: 613px;
+    height: 64px;
+    padding: 0 20px;
+    background-color: #fff;
+    width: min(720px, 100%);
+    border: 0;
+    border-radius: 12px 0 0 12px;
+    color: var(--villow-ink);
+    font-size: 16px;
 }
-
 
 .search_container__search_button {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 68px;
+    border-radius: 0 12px 12px 0;
+    background: #fff;
+    cursor: pointer;
+}
+
+@media (max-width: 760px) {
+    #navigation {
+        width: min(100% - 28px, 1320px);
+        min-height: 68px;
+        gap: 12px;
+    }
+
+    .nav-links {
+        gap: 12px;
+        font-size: 12px;
+    }
+
+    .left a:nth-child(2) {
+        display: none;
+    }
+
+    .right a {
+        display: none;
+    }
+
+    .brand-logo {
+        width: 108px;
+    }
+
+    .search_container {
+        min-height: 390px;
+        padding: 42px 16px 52px;
+    }
+
+    .hero-copy h1 {
+        font-size: clamp(32px, 10vw, 46px);
+    }
 }

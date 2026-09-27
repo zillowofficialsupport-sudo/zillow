@@ -34,49 +34,42 @@ const Navigation = ({ isIndex }) => {
 
 
   return (
-    <>
-      <div className="container">
-        <nav id="navigation">
-          <div className="grid-item left">
-            <a href="https://github.com/M8825">Github</a>
-            <a href="https://www.linkedin.com/in/malkhaz-mamulashvili-703a97208/">
-              LinkedIn
-            </a>
-            <a href="https://wellfound.com/u/malkhaz-mamulashvili">Wellfound</a>
-            <a href="#">About</a>
-          </div>
-          <Link to="/">
-            <div
-              className="grid-item middle"
-              style={{ width: "200px", height: "10px" }}
-            >
-              <img src={villow} alt="villow" style={{ marginTop: "20px", height: "55px" }} />
-            </div>
-          </Link>
-          <div className="grid-item right">
-            <p>Manage Rentals</p>
-            <p>Advertise</p>
-            <p>Help</p>
-            {activeUser ? (
-              <AuthorizedUser />
-            ) : (
-              <ModalContainer
-                modalAreaStyling={modalAreaStyling}
-                ModalWelcomeHeader={ModalWelcomeHeader}
-                ModalTabs={ModalTabs}
-              />
-            )}
-          </div>
-        </nav>
+    <header className="container">
+      <nav id="navigation" aria-label="Primary navigation">
+        <div className="grid-item left nav-links">
+          <Link to="/listings">Buy</Link>
+          <Link to="/listings">Rent</Link>
+          <Link to="/listings/new">Sell</Link>
+        </div>
+        <Link to="/" className="brand-link" aria-label="Villow home">
+          <img className="brand-logo" src={villow} alt="Villow" />
+        </Link>
+        <div className="grid-item right nav-links">
+          <Link to="/listings/new">List your home</Link>
+          <Link to="/listings">Explore</Link>
+          {activeUser ? (
+            <AuthorizedUser />
+          ) : (
+            <ModalContainer
+              modalAreaStyling={modalAreaStyling}
+              ModalWelcomeHeader={ModalWelcomeHeader}
+              ModalTabs={ModalTabs}
+            />
+          )}
+        </div>
+      </nav>
 
-        {!isIndex && (
-          <div className="search_container">
-            <h1>Agents. Tours. Loans. Homes</h1>
-            <SearchBar />
+      {!isIndex && (
+        <div className="search_container">
+          <div className="hero-copy">
+            <p className="eyebrow">A better way to move</p>
+            <h1>Find a place that feels like home.</h1>
+            <p>Search trusted listings, compare details, and take the next step with confidence.</p>
           </div>
-        )}
-      </div>
-    </>
+          <SearchBar />
+        </div>
+      )}
+    </header>
   );
 };
 

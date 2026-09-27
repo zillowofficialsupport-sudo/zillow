@@ -1,3 +1,14 @@
 .close-button-container {
   display: none;
 }
+
+.listing-loading-state {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  background: rgba(12, 33, 52, 0.44);
+  color: #fff;
+  font-size: 16px;
+}

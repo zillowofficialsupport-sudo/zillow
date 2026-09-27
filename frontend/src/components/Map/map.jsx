@@ -19,7 +19,13 @@ const Map = ({ listingId }) => {
 	// determine which listing to render on the map
 	// if listingId is present, we assume that render the single listing
 	const listings = useMemo(() => {
-		return listingId ? [singleListing] : allListings;
+		const source = listingId ? [singleListing] : allListings;
+		return source.filter(
+			(listing) =>
+				listing &&
+				Number.isFinite(Number(listing.lat)) &&
+				Number.isFinite(Number(listing.lng))
+		);
 	}, [listingId, singleListing, allListings]);
 
 	const [center, setCenter] = useState();
@@ -52,6 +58,15 @@ const Map = ({ listingId }) => {
 	const onMapLoad = () => {
 		setMapsApiLoaded(true);
 	};
+
+	if (!MAPS_API_KEY || listings.length === 0) {
+		return (
+			<div className="map-empty-state">
+				<span>Map preview unavailable</span>
+				<p>Location details are still available in this listing.</p>
+			</div>
+		);
+	}
 
 	return (
 		<div className="map_container">

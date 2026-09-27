@@ -1,17 +1,54 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { CloseModalFunction } from "../Modal/ModalContainer";
 import villow from "../assets/Logo-Villow.svg";
-import { BackArrow, Heart, Share, Hide, More} from "./assets/svgs";
+import { BackArrow, Heart, Share } from "./assets/svgs";
+import { addFavorite, removeFavorite } from "../../store/listingsReducer";
+import { getActiveUser } from "../../store/usersReducer";
 
 import "./style/ListingHeader.scss";
 
-const ListingHeader = () => {
+const ListingHeader = ({ listing }) => {
 	const closeModal = useContext(CloseModalFunction);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(getActiveUser());
+  const [shared, setShared] = useState(false);
+  const [saved, setSaved] = useState(Boolean(listing.favorite));
+
+  const handleSave = () => {
+    if (!currentUser) return;
+    if (saved) {
+      dispatch(removeFavorite(currentUser.id, listing.id));
+    } else {
+      dispatch(addFavorite(currentUser.id, listing.id));
+    }
+    setSaved(!saved);
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: listing.title || "Home on Villow",
+      text: `${listing.address}, ${listing.city}`,
+      url: window.location.href,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareData.url);
+      }
+      setShared(true);
+      window.setTimeout(() => setShared(false), 1800);
+    } catch (error) {
+      if (error.name !== "AbortError") setShared(false);
+    }
+  };
 
 	return (
 		<header className="listing_header">
-			<div className="back-to-listing" onClick={() => closeModal()}>
+			<button className="back-to-listing" type="button" onClick={() => closeModal()}>
 				<BackArrow /> <span>Back to search</span>
 			</div>
 			<div
@@ -20,20 +57,19 @@ const ListingHeader = () => {
 			>
 				<img src={villow} alt="villow" style={{ marginTop: "5px" }} />
 			</div>
-			<ul>
-				<li>
+			<div className="listing_header__actions">
+				<button
+          type="button"
+          data-action="save-listing"
+          onClick={handleSave}
+          aria-pressed={saved}
+        >
 					<Heart /> Save
-				</li>
-				<li>
-					<Share /> Share
-				</li>
-				<li>
-					<Hide /> Hide
-				</li>
-				<li>
-					<More /> More
-				</li>
-			</ul>
+				</button>
+				<button type="button" onClick={handleShare}>
+					<Share /> {shared ? "Link copied" : "Share"}
+				</button>
+			</div>
 		</header>
 	);
 };

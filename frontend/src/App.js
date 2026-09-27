@@ -17,9 +17,9 @@ const App = () => {
       <SkeletonTheme baseColor="#eaeaea" highlightColor="#d9d9d9">
         <ScrollToTop />
         <Switch>
-          <Route exec path="/listings/new" component={CreateListing} />
+          <Route exact path="/listings/new" component={CreateListing} />
           <Route
-            exec
+            exact
             path="/listings/:listingId/edit"
             component={CreateListing}
           />
