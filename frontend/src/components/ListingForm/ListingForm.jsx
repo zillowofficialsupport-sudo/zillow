@@ -9,7 +9,6 @@ import {
 	updateListing,
 } from "../../store/listingsReducer";
 
-import { getActiveUser } from "../../store/usersReducer";
 import Footer from "../Footer";
 
 import uploadPhotosImg from "./assets/upload-photos.png";
@@ -31,23 +30,10 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 	}, [dispatch, listingId]);
 
 	const [photoFiles, setPhotoFiles] = useState([]);
-	const [photoUrls, setPhotoUrls] = useState([]);
+	const [submitError, setSubmitError] = useState("");
 
 	const handleFiles = ({ currentTarget }) => {
-		const files = currentTarget.files;
-		setPhotoFiles(files);
-		if (files.length !== 0) {
-			let filesLoaded = 0;
-			const urls = [];
-			Array.from(files).forEach((file, index) => {
-				const fileReader = new FileReader();
-				fileReader.readAsDataURL(file);
-				fileReader.onload = () => {
-					urls[index] = fileReader.result;
-					if (++filesLoaded === files.length) setPhotoUrls(urls);
-				};
-			});
-		} else setPhotoUrls([]);
+		setPhotoFiles(Array.from(currentTarget.files || []));
 	};
 
 	if (!listing) {
@@ -74,19 +60,17 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 		};
 	}
 
-	const owner = useSelector(getActiveUser());
-
 	const [price, setPrice] = useState(listing ? listing.price : 0);
-	const [address, setStreetAddress] = useState(listing.address);
-	const [city, setCity] = useState(listing.city);
-	const [state, setState] = useState(listing.state);
-	const [zipcode, setZipCode] = useState(listing.zipcode);
+	const [address] = useState(listing.address);
+	const [city] = useState(listing.city);
+	const [state] = useState(listing.state);
+	const [zipcode] = useState(listing.zipcode);
 	const [bedroom, setBedrooms] = useState(listing.bedroom);
 	const [bathroom, setBathrooms] = useState(listing.bathroom);
 	const [sqft, setSqft] = useState(listing.sqft);
-	const [buildingType, setBuildingType] = useState("Apartment");
-	const [builtIn, setYearBuilt] = useState(listing.builtIn);
-	const [keyWords, setKeyWords] = useState(listing.keyWords);
+	const [buildingType, setBuildingType] = useState(listing.buildingType || "Apartment");
+	const [builtIn, setYearBuilt] = useState(listing.builtIn ?? listing.built_in ?? "");
+	const [keyWords, setKeyWords] = useState(listing.keyWords ?? listing.key_words ?? "");
 	const [overview, setDescription] = useState(listing.overview);
 	const [isGarage, setGarage] = useState(listing.garage);
 	const [isAc, setAc] = useState(listing.ac);
@@ -104,53 +88,44 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
-		const formData = new FormData();
-
-		if (photoFiles.length !== 0) {
-			for (let photo of photoFiles) {
-				formData.append("listing[photos][]", photo);
-			}
-		}
-
-		if (listingId) {
-			for (let key in listing) {
-				formData.append(`listing[${key}]`, listing[key]);
-			}
-		}
+		setSubmitError("");
 
 		const estPayment = (price / (30 * 12)).toFixed(2);
 		const priceSqft = (price / sqft).toFixed(2);
+		const listingPayload = {
+			lat: coordinates?.lat ?? listing.lat,
+			lng: coordinates?.lng ?? listing.lng,
+			price: Number(price),
+			address,
+			city,
+			state,
+			zipcode: String(zipcode || ""),
+			bedroom: Number(bedroom),
+			bathroom: Number(bathroom),
+			sqft: Number(sqft),
+			listing_type: listing.listing_type || "Sale",
+			est_payment: estPayment,
+			building_type: buildingType,
+			built_in: Number(builtIn),
+			price_sqft: Number(priceSqft),
+			key_words: keyWords,
+			overview,
+			garage: isGarage,
+			ac: isAc,
+			heating: isHeating,
+			photos: photoFiles,
+		};
 
-		formData.append("listing[lat]", coordinates.lat);
-		formData.append("listing[lng]", coordinates.lng);
-		formData.append("listing[price]", price);
-		formData.append("listing[address]", address);
-		formData.append("listing[city]", city);
-		formData.append("listing[state]", state);
-		formData.append("listing[zipcode]", zipcode);
-		formData.append("listing[bedroom]", bedroom);
-		formData.append("listing[bathroom]", bathroom);
-		formData.append("listing[sqft]", sqft);
-		formData.append("listing[listing_type]", "Sale");
-		formData.append("listing[est_payment]", estPayment);
-		formData.append("listing[building_type]", buildingType);
-		formData.append("listing[built_in]", builtIn);
-		formData.append("listing[price_sqft]", priceSqft);
-		formData.append("listing[key_words]", keyWords);
-		formData.append("listing[overview]", overview);
-		formData.append("listing[owner_id]", owner.id);
-		formData.append("listing[garage]", isGarage);
-		formData.append("listing[ac]", isAc);
-		formData.append("listing[heating]", isHeating);
-
-		if (listingId) {
-			dispatch(updateListing(formData, listingId));
-		} else {
-			dispatch(createListing(formData));
+		try {
+			if (listingId) {
+				await dispatch(updateListing(listingPayload, listingId));
+			} else {
+				await dispatch(createListing(listingPayload));
+			}
+			history.push("/listings");
+		} catch (error) {
+			setSubmitError(error.message || "Could not save this listing.");
 		}
-
-		history.push("/listings");
 	};
 
 	// TODO: add styling to input focus
@@ -159,6 +134,7 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 			<hr />
 			<div className="form-container">
 				<form onSubmit={handleSubmit}>
+					{submitError && <p role="alert">{submitError}</p>}
 					<br />
 					<h1>For Sale By Owner Listing</h1>
 					<h2 className="address-title">{`${resultAddress.streetAddress}, ${resultAddress.city}, ${resultAddress.state}, ${resultAddress.zipcode}`}</h2>
@@ -213,9 +189,9 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 								/>
 								<br />
 							</div>
-							{Array.from(photoFiles).length !== 0 ? (
+							{photoFiles.length !== 0 ? (
 								<div className="photo-preview">
-									{Array.from(photoFiles).map(
+									{photoFiles.map(
 										(photo, idx) => (
 											<div
 												key={idx}

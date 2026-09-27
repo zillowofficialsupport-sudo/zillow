@@ -1,4 +1,5 @@
-import { csrfFetch } from "./csrf";
+import { hasSupabaseConfig, supabase } from "../lib/supabaseClient";
+import { signInWithSupabase, signOutSupabase, signUpWithSupabase } from "../lib/auth";
 
 // ACTION TYPES
 const RECEIVE_USER = "users/RECEIVE_USER";
@@ -23,73 +24,41 @@ export const getActiveUser = () => (state) => {
 };
 
 export const loginUser = (userCredentials) => async (dispatch) => {
-  try {
-    let res = await csrfFetch("/api/session", {
-      method: "POST",
-      body: JSON.stringify(userCredentials),
-    });
-
-
-    if (res.ok) {
-      const { user } = await res.json();
-      const csrfToken = res.headers.get("X-CSRF-Token");
-
-      if (csrfToken) {
-	localStorage.setItem("X-CSRF-Token", csrfToken);
-        sessionStorage.setItem(
-          "currentUser",
-          JSON.stringify({
-            id: user.id,
-            name: user.email,
-          })
-        );
-      }
-
-      dispatch(receiveUser(user));
-    } else {
-      try {
-        const { errors } = await res.json();
-        throw new Error(errors.join(", "));
-      } catch (jsonError) {
-        throw new Error(res.statusText);
-      }
-    }
-  } catch (error) {
-    throw error;
+  if (!hasSupabaseConfig || !supabase) {
+    throw new Error("Supabase is not configured. Add the project URL and anon key.");
   }
+  const { user } = await signInWithSupabase(userCredentials.email, userCredentials.password);
+  dispatch(receiveUser({ id: user.id, email: user.email }));
 };
 
 export const logoutUser = () => async (dispatch) => {
-  await csrfFetch("/api/session", {
-    method: "DELETE",
-  });
-  localStorage.removeItem("currentUser");
+  await signOutSupabase();
   dispatch(removeUser());
 };
 
 export const createUser = (user) => async (dispatch) => {
-  let res = await csrfFetch("/api/users", {
-    method: "POST",
-    body: JSON.stringify(user),
-  });
-
-  if (res.ok) {
-    let data = await res.json();
-    localStorage.setItem("currentUser", JSON.stringify(data.user));
-    dispatch(receiveUser(data.user));
-  } else {
-    const { errors } = await res.json();
-    throw new Error(errors);
+  if (!hasSupabaseConfig || !supabase) {
+    throw new Error("Supabase is not configured. Add the project URL and anon key.");
   }
+  const { user: createdUser, session } = await signUpWithSupabase(user.email, user.password, {
+    full_name: user.fullName || user.email,
+  });
+  if (!createdUser) throw new Error("Account creation did not return a user.");
+  if (!session) {
+    throw new Error("Account created. Verify your email, then sign in.");
+  }
+  dispatch(receiveUser({ id: createdUser.id, email: createdUser.email }));
 };
 
 export const fetchCurrentUser = () => async (dispatch) => {
-  const res = await csrfFetch("/api/session");
-
-  if (res.ok) {
-    const { user } = await res.json();
-    dispatch(receiveUser(user));
+  if (!hasSupabaseConfig || !supabase) {
+    dispatch(removeUser());
+    return;
   }
+  const { data, error } = await supabase.auth.getSession();
+  if (error) throw error;
+  const user = data?.session?.user;
+  dispatch(user ? receiveUser({ id: user.id, email: user.email }) : removeUser());
 };
 
 // REDUCER

@@ -1,11 +1,18 @@
-import { csrfFetch } from "./csrf";
-import { objectToQuerySting } from "./utils";
 import { cleanLocalStorageSearchCredentials } from "./utils";
 import { createSelector } from "reselect";
+import {
+  createSupabaseListing,
+  deleteSupabaseListings,
+  getSupabaseFavorites,
+  getSupabaseListingById,
+  getSupabaseListingsByUserId,
+  getSupabaseListings,
+  searchSupabaseListings,
+  setSupabaseFavorite,
+  updateSupabaseListing,
+} from "../lib/listings";
 
-
-const listingSelector = state => state.listings
-
+const listingSelector = (state) => state.listings;
 
 const RECEIVE_LISTINGS = "api/listings/RECEIVE_LISTINGS";
 const RECEIVE_LISTING = "api/listings/RECEIVE_LISTING";
@@ -13,7 +20,6 @@ const REMOVE_LISTINGS = "api/listings/REMOVE_LISTINGS";
 const RECEIVE_FAVORITES = "api/listings/RECEIVE_FAVORITES";
 const REMOVE_FAVORITES = "api/listings/REMOVE_FAVORITES";
 const CLEAR_LISTINGS = "api/listings/CLEAR_LISTINGS";
-
 
 const receiveListings = (listings) => ({
   type: RECEIVE_LISTINGS,
@@ -44,7 +50,10 @@ const removeListings = (listingIds) => ({
   listingIds,
 });
 
-export const getListings = createSelector([listingSelector], listings => {
+const indexListings = (listings) =>
+  listings.reduce((indexed, listing) => ({ ...indexed, [listing.id]: listing }), {});
+
+export const getListings = createSelector([listingSelector], (listings) => {
   if (listings) {
     return Object.values(listings);
   }
@@ -60,124 +69,77 @@ export const getListing = (id) => (state) => {
   return null;
 };
 
-export const getFavorites = createSelector([listingSelector], listings => {
+export const getFavorites = createSelector([listingSelector], (listings) => {
   if (listings) {
-    return Object.values(listings).filter(listing => listing.favorite);
+    return Object.values(listings).filter((listing) => listing.favorite);
   }
 
   return [];
 });
 
 export const fetchListings = () => async (dispatch) => {
-  const res = await csrfFetch("/api/listings");
-
-  if (res.ok) {
-    const listings = await res.json();
-    dispatch(receiveListings(listings));
-  }
+  const listings = await getSupabaseListings();
+  dispatch(receiveListings(listings));
 };
 
 export const fetchListing = (id) => async (dispatch) => {
-  const res = await csrfFetch(`/api/listings/${id}`);
-
-  if (res.ok) {
-    const listing = await res.json();
-    dispatch(receiveListing(listing));
-  }
+  const listing = await getSupabaseListingById(id);
+  if (listing) dispatch(receiveListing(listing));
 };
 
 export const fetchListingByUserId = (userId) => async (dispatch) => {
-  const res = await csrfFetch(`/api/users/${userId}/listings`);
-
-  if (res.ok) {
-    const listings = await res.json();
-    dispatch(receiveListings(listings));
-  }
+  const listings = await getSupabaseListingsByUserId(userId);
+  dispatch(receiveListings(listings));
 };
 
 export const createListing = (listing) => async (dispatch) => {
-  const res = await csrfFetch("/api/listings", {
-    method: "POST",
-    body: listing,
-  });
-
-  if (res.ok) {
-    const newListing = await res.json();
-    dispatch(receiveListing(newListing));
-  }
+  const created = await createSupabaseListing(listing);
+  dispatch(receiveListing(created));
 };
 
 export const updateListing = (listing, listingId) => async (dispatch) => {
-  const res = await csrfFetch(`/api/listings/${listingId}`, {
-    method: "PUT",
-    body: listing,
-  });
-
-  if (res.ok) {
-    const updatedListing = await res.json();
-    dispatch(receiveListing(updatedListing));
-  }
+  const updated = await updateSupabaseListing(listingId, listing);
+  dispatch(receiveListing(updated));
 };
 
 export const deleteListing = (listingIds) => async (dispatch) => {
-  const res = await csrfFetch(`/api/listings/${1}`, {
-    method: "DELETE",
-    body: JSON.stringify({ listing: { listing_ids: listingIds } }),
-  });
-
-  if (res.ok) {
-    dispatch(removeListings(listingIds));
-  }
+  await deleteSupabaseListings(listingIds);
+  dispatch(removeListings(listingIds));
 };
 
 export const fetchUserFavorites = (userId) => async (dispatch) => {
-  const res = await csrfFetch(`/api/users/${userId}/favorites`);
-
-  if (res.ok) {
-    const favorites = await res.json();
-    dispatch(receiveFavorites(favorites));
+  const favorites = await getSupabaseFavorites(userId);
+  if (!favorites.length) {
+    dispatch(receiveFavorites([]));
+    return;
   }
+
+  const ids = favorites.map((favorite) => favorite.listing_id);
+  const listings = await getSupabaseListings();
+  dispatch(receiveFavorites(listings
+    .filter((listing) => ids.includes(listing.id))
+    .map((listing) => ({ ...listing, favorite: true }))));
 };
 
 export const addFavorite = (userId, listingId) => async (dispatch) => {
-  const res = await csrfFetch(`/api/users/${userId}/favorites`, {
-    method: "POST",
-    body: JSON.stringify({ listing: { listing_id: listingId } }),
-  });
-
-  if (res.ok) {
-    const favorite = await res.json();
-    dispatch(receiveListing(favorite));
-  }
+  await setSupabaseFavorite(userId, listingId, true);
+  dispatch(receiveListing({ id: listingId, favorite: true }));
 };
 
 export const removeFavorite = (userId, listingId) => async (dispatch) => {
-  const res = await csrfFetch(`/api/users/listings${userId}/favorites/${listingId}`, {
-    method: "DELETE",
-    body: JSON.stringify({ listing: { listing_id: listingId } }),
-  });
-
-  if (res.ok) {
-    dispatch(removeFavorites(listingId));
-  }
+  await setSupabaseFavorite(userId, listingId, false);
+  dispatch(removeFavorites(listingId));
 };
 
 export const fetchSearchListings =
-  (extraParams = {}) =>
+  (extraParams = {}, suggestion = null) =>
   async (dispatch) => {
-
     const baseParams = cleanLocalStorageSearchCredentials();
-
-    const queryParams = { ...baseParams, ...extraParams };
-
-    const queryString = objectToQuerySting(queryParams);
-
-    const res = await csrfFetch(`/api/search?${queryString}`);
-
-    if (res.ok) {
-      const listings = await res.json();
-        dispatch(receiveListings(listings));
-    }
+    const queryParams = typeof extraParams === "string"
+      ? { ...baseParams, ...(suggestion ? { [extraParams]: suggestion } : {}), term: extraParams }
+      : { ...baseParams, ...extraParams };
+    const listings = await searchSupabaseListings(queryParams);
+    dispatch(receiveListings(listings));
   };
 
 export const clearAllListings = () => async (dispatch) => {
@@ -189,14 +151,14 @@ const listingsReducer = (state = {}, action) => {
 
   switch (action.type) {
     case RECEIVE_LISTINGS:
-      return {...newState, ...action.listings };
+      return { ...newState, ...indexListings(action.listings) };
     case RECEIVE_LISTING:
       newState[action.listing.id] = action.listing;
       return newState;
     case RECEIVE_FAVORITES:
-      return {...newState,  ...action.favorites };
+      return { ...newState, ...indexListings(action.favorites) };
     case REMOVE_FAVORITES:
-      newState[action.listingId]['favorite'] = false;
+      newState[action.listingId] && (newState[action.listingId]["favorite"] = false);
       return newState;
     case REMOVE_LISTINGS:
       action.listingIds.forEach((listingId) => delete newState[listingId]);
