@@ -15,6 +15,7 @@ const ListingItem = ({ listing, listingStyling, thumbnailStyling }) => {
   const history = useHistory();
 	const currentUser = useSelector(getActiveUser());
   const [isListingClicked, setIsListingClicked] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
 	const formatter = new Intl.NumberFormat("en-US", {
 		style: "currency",
@@ -52,7 +53,7 @@ const ListingItem = ({ listing, listingStyling, thumbnailStyling }) => {
   const photoUrl = listing.photoUrls?.[0] || listing.photos?.[0]?.image_url;
   const keyword = listing.keyWords?.split(" ").filter(Boolean).slice(0, 3).join(" ");
   const buildingType = listing.buildingType || "Home";
-  const listingBy = listing.listingBy || listing.listing_by || "Villow";
+  const listingBy = listing.listingBy || listing.listing_by || "Zillow";
 
 	return (
 		<>
@@ -71,12 +72,24 @@ const ListingItem = ({ listing, listingStyling, thumbnailStyling }) => {
 						className="listing_item__thumbnail"
 						style={{
 							...thumbnailStyling,
-							backgroundImage: photoUrl ? `url(${photoUrl})` : "none",
+              backgroundImage: "none",
 							backgroundSize: "cover",
 							backgroundRepeat: "no-repeat",
 						}}
-					>
-						{!photoUrl && <div className="listing_item__thumbnail__fallback">Villow home</div>}
+            >
+              {photoUrl && !imageError ? (
+                <img
+                  className="listing_item__thumbnail__image"
+                  src={photoUrl}
+                  alt={`${listing.address || "Home"} exterior`}
+                  onError={() => setImageError(true)}
+                />
+              ) : (
+                <div className="listing_item__thumbnail__fallback">
+                  <span aria-hidden="true">⌂</span>
+                  <span>Zillow home</span>
+                </div>
+              )}
 						{keyword && <div className="listing_item__thumbnail__keyword">{keyword}</div>}
 						<button
               className="listing_item__thumbnail__favorite"

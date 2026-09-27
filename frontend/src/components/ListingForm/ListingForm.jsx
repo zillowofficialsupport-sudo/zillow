@@ -159,7 +159,7 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 					<h1>For Sale By Owner Listing</h1>
 					<h2 className="address-title">{`${address}, ${city}, ${state}, ${zipcode}`}</h2>
 					<p className="warning">
-						Post once and your home will be listed on both Villow
+						Post once and your home will be listed on both Zillow
 						and Trulia, reaching buyers on the largest real estate
 						network on the Web. Plus, home shoppers receive emails
 						about new homes on the market – including yours.
@@ -364,20 +364,20 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 								on behalf of) the owner of this home; (ii) I
 								will not provide incorrect information or state
 								a ; (iii) I will be posting my property 'for
-								sale by owner' on villow.com and other
+								sale by owner' on zillow-bxb.pages.dev and other
 								affiliated websites and that I will solely be
 								responsible for maintaining and updating the
 								posting and responding to and negotiating
 								potential offers to purchase the property; (iv)
-								Villow, Inc. ("Villow") is a licensed real
+								Zillow, Inc. ("Zillow") is a licensed real
 								estate brokerage, that I am not entering into
-								any agency or brokerage relationship with Villow
-								as part of this posting and that Villow is not
+								any agency or brokerage relationship with Zillow
+								as part of this posting and that Zillow is not
 								providing me with any real estate brokerage
 								services as part of this posting; and (v) I will
-								comply with the Villow Terms of Use and Listing
+								comply with the Zillow Terms of Use and Listing
 								Quality Policy I also agree that by clicking
-								below, Villow Group and its affiliates, and real
+								below, Zillow Group and its affiliates, and real
 								estate professionals
 								<div>
 									<p>
@@ -385,13 +385,13 @@ const ListingForm = ({ resultAddress, coordinates }) => {
 										real estate agents and brokers, mortgage
 										lenders and loan officers, property
 										managers and other professionals you
-										interact with through Villow. Villow
+										interact with through Zillow. Zillow
 										Premier Agent is an advertising program
 										that helps connect customers to local
-										real estate professionals. Villow
+										real estate professionals. Zillow
 										Premier Agent partners are paid
 										advertisers and are not affiliated with
-										Villow, Inc. brokerage or any of its
+										Zillow, Inc. brokerage or any of its
 										affiliates.
 									</p>
 									may call or text me for marketing purposes,

@@ -5,9 +5,12 @@ import "./style/gallery.scss";
 const Gallery = ({ listing }) => {
   const photos = listing?.photoUrls?.length
     ? listing.photoUrls
-    : [null];
+    : listing?.photos?.map((photo) => photo.image_url).filter(Boolean).length
+      ? listing.photos.map((photo) => photo.image_url).filter(Boolean)
+      : [null];
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [failedPhotos, setFailedPhotos] = useState({});
   const address = `${listing.address}, ${listing.city}`;
 
   useEffect(() => {
@@ -26,12 +29,17 @@ const Gallery = ({ listing }) => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, photos.length]);
 
-  const renderPhoto = (photo, alt) =>
-    photo ? (
-      <img alt={alt} src={photo} />
+  const renderPhoto = (photo, alt, photoIndex) =>
+    photo && !failedPhotos[photoIndex] ? (
+      <img
+        alt={alt}
+        src={photo}
+        onError={() => setFailedPhotos((current) => ({ ...current, [photoIndex]: true }))}
+      />
     ) : (
       <div className="gallery-placeholder" aria-label="No property photos available">
-        <span>Villow home</span>
+        <span aria-hidden="true">⌂</span>
+        <span>Zillow home</span>
       </div>
     );
 
@@ -47,7 +55,7 @@ const Gallery = ({ listing }) => {
           }}
           aria-label="Open property photos"
         >
-          {renderPhoto(photos[0], `${address} exterior`)}
+          {renderPhoto(photos[0], `${address} exterior`, 0)}
         </button>
         {photos.slice(1, 5).map((photo, idx) => (
           <button
@@ -60,7 +68,7 @@ const Gallery = ({ listing }) => {
             }}
             aria-label={`Open property photo ${idx + 2}`}
           >
-            {renderPhoto(photo, `${address} photo ${idx + 2}`)}
+            {renderPhoto(photo, `${address} photo ${idx + 2}`, idx + 1)}
           </button>
         ))}
         {photos.length > 5 && (
@@ -102,7 +110,7 @@ const Gallery = ({ listing }) => {
             ‹
           </button>
           <div className="gallery-lightbox__content" onClick={(event) => event.stopPropagation()}>
-            {renderPhoto(photos[activeIndex], `${address} photo ${activeIndex + 1}`)}
+            {renderPhoto(photos[activeIndex], `${address} photo ${activeIndex + 1}`, activeIndex)}
             <p>{activeIndex + 1} of {photos.length}</p>
           </div>
           <button

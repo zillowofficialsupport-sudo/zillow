@@ -10,7 +10,7 @@ import SearchBar from "../SearchBar/SearchBar";
 
 import { fetchCurrentUser, getActiveUser } from "../../store/usersReducer";
 
-import villow from "../assets/Logo-Villow.svg";
+import zillow from "../assets/Logo-Villow.svg";
 import "./Navigation.scss";
 
 const Navigation = ({ isIndex }) => {
@@ -41,8 +41,8 @@ const Navigation = ({ isIndex }) => {
           <Link to="/listings">Rent</Link>
           <Link to="/listings/new">Sell</Link>
         </div>
-        <Link to="/" className="brand-link" aria-label="Villow home">
-          <img className="brand-logo" src={villow} alt="Villow" />
+        <Link to="/" className="brand-link" aria-label="Zillow home">
+          <img className="brand-logo" src={zillow} alt="Zillow" />
         </Link>
         <div className="grid-item right nav-links">
           <Link to="/listings/new">List your home</Link>

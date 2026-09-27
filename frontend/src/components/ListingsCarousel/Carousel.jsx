@@ -34,8 +34,14 @@ const Carousel = ({
         <Swiper
           className="carousel-container__swiper"
           modules={[Navigation, A11y]}
-          spaceBetween={25}
-          slidesPerView={3.4}
+           spaceBetween={20}
+           slidesPerView={1.1}
+           breakpoints={{
+             520: { slidesPerView: 1.5, spaceBetween: 16 },
+             760: { slidesPerView: 2.1, spaceBetween: 18 },
+             1050: { slidesPerView: 3, spaceBetween: 20 },
+             1280: { slidesPerView: 3.4, spaceBetween: 20 },
+           }}
           navigation={{
             prevEl: `.${prevButtonClassName}`,
             nextEl: `.${nextButtonClassName}`,

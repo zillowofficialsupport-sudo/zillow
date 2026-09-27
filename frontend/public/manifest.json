@@ -1,8 +1,16 @@
 {
-  "short_name": "React Template",
-  "name": "Create React App Template",
+  "short_name": "Zillow",
+  "name": "Zillow | Find a place that feels like home",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#006aff",
+  "background_color": "#f5f8fc",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }

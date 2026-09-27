@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { CloseModalFunction } from "../Modal/ModalContainer";
-import villow from "../assets/Logo-Villow.svg";
+import zillow from "../assets/Logo-Villow.svg";
 import { BackArrow, Heart, Share } from "./assets/svgs";
 import { addFavorite, removeFavorite } from "../../store/listingsReducer";
 import { getActiveUser } from "../../store/usersReducer";
@@ -28,7 +28,7 @@ const ListingHeader = ({ listing }) => {
 
   const handleShare = async () => {
     const shareData = {
-      title: listing.title || "Home on Villow",
+      title: listing.title || "Home on Zillow",
       text: `${listing.address}, ${listing.city}`,
       url: window.location.href,
     };
@@ -55,7 +55,7 @@ const ListingHeader = ({ listing }) => {
 				className="grid-item middle"
 				style={{ width: "125px", height: "45px" }}
 			>
-				<img src={villow} alt="villow" style={{ marginTop: "5px" }} />
+				<img src={zillow} alt="Zillow" style={{ marginTop: "5px" }} />
 			</div>
 			<div className="listing_header__actions">
 				<button

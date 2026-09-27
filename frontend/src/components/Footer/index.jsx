@@ -26,7 +26,7 @@ const Footer = () => (
     <hr />
     <div className="footer">
       <ul className="language-links">
-        <li><a href="/">About Villow</a></li>
+        <li><a href="/">About Zillow</a></li>
         <li><a href="/listings">Browse homes</a></li>
         <li><a href="/listings/new">List a home</a></li>
         <li><a href="https://github.com/M8825" target="_blank" rel="noreferrer">Feedback</a></li>
@@ -38,7 +38,7 @@ const Footer = () => (
       <hr />
       <div className="under-footer">
         <p>
-          Villow is committed to making home search clear and accessible. If you find
+           Zillow is committed to making home search clear and accessible. If you find
           an experience that could work better, please contact us and let us know.
         </p>
         <p>
@@ -46,7 +46,7 @@ const Footer = () => (
           listing teams and may change without notice.
         </p>
       </div>
-      <div className="footer-mark" aria-hidden="true">V</div>
+       <div className="footer-mark" aria-hidden="true">Z</div>
     </div>
   </footer>
 );

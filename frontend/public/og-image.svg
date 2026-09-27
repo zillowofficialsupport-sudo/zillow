@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Zillow</title>
+  <desc id="desc">Find a place that feels like home.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#003b95"/>
+      <stop offset="1" stop-color="#006aff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <circle cx="1040" cy="80" r="250" fill="#63b7ff" opacity=".25"/>
+  <circle cx="90" cy="580" r="220" fill="#00a6e6" opacity=".24"/>
+  <path d="M875 430h170v-76l-85-70-85 70z" fill="none" stroke="#fff" stroke-width="14" opacity=".9"/>
+  <path d="M900 430v-99h120v99" fill="none" stroke="#fff" stroke-width="14" opacity=".9"/>
+  <text x="90" y="270" fill="#fff" font-family="Arial, sans-serif" font-size="110" font-weight="700">Zillow</text>
+  <text x="96" y="355" fill="#d9edff" font-family="Arial, sans-serif" font-size="38">Find a place that feels like home.</text>
+</svg>

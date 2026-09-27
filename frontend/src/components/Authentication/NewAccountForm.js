@@ -155,7 +155,7 @@ const NewAccountForm = () => {
 
           <div id="login_form__terms_and_conditions">
             <p>
-              By submitting, I accept Villow's{" "}
+              By submitting, I accept Zillow's{" "}
               <a
                 id="login_form__terms_and_conditions__terms_of_use_link"
                 href="https://www.zillow.com/z/corp/terms/"

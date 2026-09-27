@@ -68,7 +68,7 @@ const Home = ({ listing }) => {
                 </li>
                 <li>
                   <span className="metric-mark">≈</span> {listingPrice}
-                  <span>Villow estimate</span>
+                  <span>Zillow estimate</span>
                 </li>
                 <li>
                   <Calendar />
@@ -101,7 +101,7 @@ const Home = ({ listing }) => {
             )}
 
             <p>
-              Listed by: <span>{listing.listingBy || "Villow"}</span>
+              Listed by: <span>{listing.listingBy || "Zillow"}</span>
             </p>
             <div>
               <ShowMore text={listing.overview || "No description has been provided for this home yet."} />
@@ -110,7 +110,7 @@ const Home = ({ listing }) => {
 
           <div className="line-footer">
             <p>
-              <span>{createdTime(listing.createdAt)}</span> on Villow
+              <span>{createdTime(listing.createdAt)}</span> on Zillow
             </p>
             <span aria-hidden="true">•</span>
             <p>

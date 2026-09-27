@@ -99,7 +99,7 @@ const GrabAddressForm = ({
 					</div>
 				</div>
 			</form>
-			<h2>Why post on Villow?</h2>
+			<h2>Why post on Zillow?</h2>
 			<div className="address-input-bottom">
 				<div className="description-items">
 					<div className="home-image"></div>
@@ -111,7 +111,7 @@ const GrabAddressForm = ({
 				<div className="description-items">
 					<div className="rupor-image"></div>
 					<h5>
-						Your home will be listed on Villow and Trulia, reaching
+						Your home will be listed on Zillow and Trulia, reaching
 						the largest audience of home shoppers on the Web.
 					</h5>
 				</div>

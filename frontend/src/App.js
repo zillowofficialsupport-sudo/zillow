@@ -7,6 +7,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import SplashPage from "./components/Splash/SplashPage";
 import IndexPage from "./components/IndexPage/IndexPage";
 import CreateListing from "./components/CreateListing/CreateListing";
+import NotFound from "./components/NotFound/NotFound";
 
 import "./index.scss";
 import { SkeletonTheme } from "react-loading-skeleton";
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/listings/:listingId/edit" component={CreateListing} />
           <Route exact path="/listings/new" component={CreateListing} />
           <Route exact path="/listings/:listingId" component={ShowListing} />
+          <Route component={NotFound} />
         </Switch>
       </SkeletonTheme>
     </>
